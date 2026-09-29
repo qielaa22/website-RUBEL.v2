@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RUBEL · Ruang Belajar</title>
+  <script src="js/db.js"></script>
+  <script>
+    (function () {
+      var u = DB.current();
+      location.replace(u ? DB.ROLE_PAGE[u.role] : "login.html");
+    })();
+  </script>
+</head>
+<body style="background:#FBF6EC;font-family:system-ui,sans-serif;padding:2rem">
+  <p>Membuka RUBEL… Kalau tidak berpindah otomatis, <a href="login.html">klik di sini</a>.</p>
+</body>
+</html>

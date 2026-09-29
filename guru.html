@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruang Guru · RUBEL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 6C40 20 50 30 50 41a18 18 0 0 1-36 0C14 30 24 20 32 6z' fill='%234F86A8'/%3E%3C/svg%3E">
+  <script src="js/db.js"></script>
+  <script>DB.requireRole("guru");</script>
+</head>
+<body class="theme-guru">
+  <a class="skip" href="#main">Langsung ke isi</a>
+
+  <header class="topbar">
+    <a class="brand" href="#beranda" aria-label="RUBEL, kembali ke beranda guru">
+      <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M6 22 L24 7 L42 22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10 20 V40 Q10 42 12 42 H36 Q38 42 38 40 V20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M17 42 V30 Q24 27 24 31 Q24 27 31 30 V42" fill="#E3B23C" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+        <path d="M24 31 V42" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <span class="brand-text"><b>RUBEL</b><small>Ruang Guru</small></span>
+    </a>
+    <p class="subject-chip"><span class="dot"></span> <span id="subjectChip"></span></p>
+    <div class="top-actions">
+      <button class="icon-btn" id="textSize" type="button" aria-pressed="false" title="Perbesar atau perkecil tulisan">
+        <span aria-hidden="true">A<b>A</b></span><span class="sr">Ukuran tulisan</span>
+      </button>
+      <a class="user-chip" id="userChip" href="#profil"></a>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="sidenav">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h11M4 17h16"/></svg>
+        <span>Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidenav" id="sidenav" aria-label="Halaman guru">
+      <p class="nav-caption">Ruang guru</p>
+      <ol class="nav-list">
+        <li><a href="#beranda" data-nav="beranda"><span class="nav-ico"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10"/></svg></span><span>Beranda<small>Ringkasan kelas</small></span></a></li>
+        <li><a href="#siswa" data-nav="siswa"><span class="nav-ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5M15 14.5c3 0 6 1.5 6 4.5"/></svg></span><span>Daftar Siswa<small>Kemajuan tiap anak</small></span><i class="count" id="navCount"></i></a></li>
+        <li><a href="#rekap" data-nav="rekap"><span class="nav-ico"><svg viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></span><span>Rekap Kuis<small>Soal yang sering keliru</small></span></a></li>
+        <li><a href="#suara" data-nav="suara"><span class="nav-ico"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8"/></svg></span><span>Suara Siswa<small>Kebingungan &amp; pertanyaan</small></span><i class="count warm" id="navVoice"></i></a></li>
+        <li><a href="#atur" data-nav="atur"><span class="nav-ico"><svg viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg></span><span>Atur Isi &amp; Bagikan<small>Pesan, video, kode QR</small></span></a></li>
+        <li><a href="#panduan" data-nav="panduan"><span class="nav-ico"><svg viewBox="0 0 24 24"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1z"/><path d="M12 6v14"/></svg></span><span>Panduan<small>Membangun di Google Sites</small></span></a></li>
+        <li class="nav-sep"><a href="#profil" data-nav="profil"><span class="nav-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span><span>Profil<small>Akun &amp; kelas</small></span></a></li>
+      </ol>
+      <div class="nav-note"><p>RUBEL membantu, tetapi Bapak/Ibu yang memimpin pembelajaran.</p></div>
+      <button class="btn btn-ghost btn-sm nav-logout" type="button" data-logout>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"/></svg> Keluar
+      </button>
+    </nav>
+    <div class="nav-backdrop" id="navBackdrop" hidden></div>
+
+    <main id="main" tabindex="-1">
+
+      <!-- ============ BERANDA ============ -->
+      <section class="page" id="beranda" aria-labelledby="h-g-beranda">
+        <header class="page-head">
+          <p class="hand hello" id="greet"></p>
+          <h1 id="h-g-beranda">Begini kabar <span class="underline" id="clsNameHead"></span> hari ini.</h1>
+        </header>
+
+        <div class="card class-card">
+          <div>
+            <p class="eyebrow">Kode kelas</p>
+            <p class="class-code" id="classCode"></p>
+            <p class="muted small">Bagikan kode ini ke siswa. Mereka memakainya saat mendaftar di RUBEL.</p>
+          </div>
+          <div class="row wrap">
+            <button class="btn btn-soft btn-sm" type="button" id="copyCode">Salin kode</button>
+            <a class="btn btn-ghost btn-sm" href="#atur">Buat kode QR</a>
+          </div>
+        </div>
+
+        <div class="stats stats-4" id="statTiles"></div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h2>Perlu perhatian</h2>
+            <p class="muted small">Siswa yang belum mulai, nilainya masih rendah, atau merasa bingung.</p>
+            <ul class="people" id="attentionList"></ul>
+          </div>
+          <div class="card">
+            <h2>Sebelum masuk kelas</h2>
+            <p class="muted small">Saran dari data kuis dan refleksi siswa.</p>
+            <div id="beforeClass"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Siklus kerja RUBEL</h2>
+          <ol class="loop">
+            <li><span class="num">1</span><b>Siapkan</b><p>Isi materi, video, dan kuis.</p></li>
+            <li><span class="num">2</span><b>Bagikan</b><p>Kirim kode kelas atau tempel kode QR.</p></li>
+            <li><span class="num">3</span><b>Siswa belajar</b><p>Sesuai kecepatan masing-masing.</p></li>
+            <li><span class="num">4</span><b>Rekap otomatis</b><p>Jawaban langsung terkumpul di sini.</p></li>
+            <li><span class="num">5</span><b>Baca rekap</b><p>Bahas soal yang paling banyak keliru.</p></li>
+          </ol>
+          <p class="hand loop-back">…lalu kembali ke langkah 1 ↺</p>
+        </div>
+      </section>
+
+      <!-- ============ DAFTAR SISWA ============ -->
+      <section class="page" id="siswa" aria-labelledby="h-g-siswa">
+        <header class="page-head">
+          <p class="eyebrow">Daftar Siswa</p>
+          <h1 id="h-g-siswa">Kemajuan setiap anak</h1>
+          <p class="lead">Klik nama siswa untuk melihat jawaban, catatan, dan refleksinya.</p>
+        </header>
+        <div class="toolbar">
+          <label class="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>
+            <span class="sr">Cari siswa</span>
+            <input type="search" id="studentSearch" placeholder="Cari nama siswa…">
+          </label>
+          <div class="chips" role="group" aria-label="Saring siswa" id="studentFilter">
+            <button type="button" class="chip" aria-pressed="true" data-filter="all">Semua</button>
+            <button type="button" class="chip" aria-pressed="false" data-filter="help">Perlu perhatian</button>
+            <button type="button" class="chip" aria-pressed="false" data-filter="done">Sudah selesai</button>
+          </div>
+        </div>
+        <div class="card flush">
+          <ul class="student-list" id="studentList"></ul>
+        </div>
+      </section>
+
+      <!-- ============ REKAP KUIS ============ -->
+      <section class="page" id="rekap" aria-labelledby="h-g-rekap">
+        <header class="page-head">
+          <p class="eyebrow">Rekap Kuis</p>
+          <h1 id="h-g-rekap">Soal mana yang perlu dibahas lagi?</h1>
+          <p class="lead">Dihitung dari percobaan <strong>terakhir</strong> setiap siswa, supaya terlihat pemahaman mereka sekarang.</p>
+        </header>
+        <div class="card" id="rekapBox"></div>
+        <div class="card">
+          <h2>Jawaban pertanyaan pemantik</h2>
+          <p class="muted">“Setelah hujan, jalanan basah dan ada genangan. Besok siangnya jalanan sudah kering. Ke mana perginya air itu?”</p>
+          <ul class="answers" id="pemantikList"></ul>
+        </div>
+      </section>
+
+      <!-- ============ SUARA SISWA ============ -->
+      <section class="page" id="suara" aria-labelledby="h-g-suara">
+        <header class="page-head">
+          <p class="eyebrow">Suara Siswa</p>
+          <h1 id="h-g-suara">Apa yang mereka rasakan dan tanyakan?</h1>
+          <p class="lead">Diambil dari halaman Refleksi siswa. Bagus untuk membuka diskusi di awal pelajaran.</p>
+        </header>
+        <div class="card">
+          <h2>Perasaan setelah belajar</h2>
+          <ul class="mood-sum" id="moodSum"></ul>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h2>Masih bingung tentang…</h2>
+            <ul class="answers" id="confusedList"></ul>
+          </div>
+          <div class="card">
+            <h2>Ingin bertanya…</h2>
+            <ul class="answers" id="questionList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ATUR ISI ============ -->
+      <section class="page" id="atur" aria-labelledby="h-g-atur">
+        <header class="page-head">
+          <p class="eyebrow">Atur Isi &amp; Bagikan</p>
+          <h1 id="h-g-atur">Sesuaikan ruang belajar kelas Anda</h1>
+          <p class="lead">Perubahan di sini langsung terlihat oleh semua siswa di kelas ini.</p>
+        </header>
+        <div class="grid-2">
+          <form class="card" id="settingsForm">
+            <h2>Pesan &amp; video</h2>
+            <label for="teacherMsg" class="field-label">Pesan untuk siswa (tampil di beranda siswa)</label>
+            <textarea id="teacherMsg" rows="4"></textarea>
+            <p class="field-label">Tautan YouTube untuk Galeri Video</p>
+            <div class="video-urls" id="videoUrls"></div>
+            <button class="btn btn-primary" type="submit">Simpan perubahan</button>
+          </form>
+          <div class="card">
+            <h2>Bagikan ke kelas</h2>
+            <p class="muted">Tempel alamat situs RUBEL, lalu cetak kode QR-nya untuk ditempel di papan tulis.</p>
+            <label for="shareUrl" class="field-label">Alamat situs</label>
+            <div class="row">
+              <input type="url" id="shareUrl" placeholder="https://sites.google.com/...">
+              <button class="btn btn-soft" type="button" id="copyUrl">Salin</button>
+            </div>
+            <div class="qr-wrap">
+              <div id="qrBox" class="qr-box" aria-label="Kode QR situs"></div>
+              <div>
+                <p class="small muted" id="qrNote"></p>
+                <p class="small">Kode kelas: <b id="qrClassCode"></b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PANDUAN ============ -->
+      <section class="page" id="panduan" aria-labelledby="h-g-panduan">
+        <header class="page-head">
+          <p class="eyebrow">Panduan</p>
+          <h1 id="h-g-panduan">Panduan singkat untuk guru</h1>
+          <p class="lead">Langkah-langkah ringkas bila Bapak/Ibu ingin membangun RUBEL sendiri dengan Google Sites.</p>
+        </header>
+        <div class="card accordion">
+          <details open>
+            <summary>Sintaks penggunaan dalam pembelajaran</summary>
+            <ol class="steps">
+              <li><b>Sebelum tatap muka:</b> bagikan tautan, target belajar, dan pengingat cara menonton. Siswa membaca materi, menonton video, dan menjawab pertanyaan pemantik.</li>
+              <li><b>Saat tatap muka:</b> bahas jawaban pemantik yang paling banyak keliru. Arahkan ke diskusi, pemecahan masalah, dan lembar kerja berkelompok.</li>
+              <li><b>Setelah tatap muka:</b> siswa mengerjakan latihan dan refleksi. Hasilnya menjadi dasar pengayaan atau pendampingan tambahan.</li>
+            </ol>
+          </details>
+          <details>
+            <summary>Memulai situs di Google Sites</summary>
+            <ol class="steps">
+              <li>Masuk dengan akun Google, sebaiknya akun <b>belajar.id</b> milik sekolah.</li>
+              <li>Buka <b>sites.google.com</b>, lalu pilih <b>Situs Kosong</b>.</li>
+              <li>Tentukan nama dan tema sekali di awal agar semua halaman seragam.</li>
+              <li>Buat halaman: Beranda, Tujuan, Materi, Galeri Video, Lembar Kerja, Latihan &amp; Kuis, Refleksi, Ruang Guru &amp; Orang Tua.</li>
+            </ol>
+          </details>
+          <details>
+            <summary>Menyisipkan materi dan video</summary>
+            <ol class="steps">
+              <li>Di panel kanan, pilih <b>Sisipkan → Drive</b> untuk Google Docs atau Slides.</li>
+              <li>Materi yang diperbaiki di Docs/Slides akan <b>ikut berubah otomatis</b> di situs.</li>
+              <li>Untuk video, pilih <b>Sisipkan → YouTube</b>. Pilih video pendek (SD: maksimal 5 menit).</li>
+            </ol>
+          </details>
+          <details>
+            <summary>Membuat kuis yang langsung memberi umpan balik</summary>
+            <ol class="steps">
+              <li>Buat Google Forms, buka <b>Setelan → Jadikan kuis</b>.</li>
+              <li>Isi <b>kunci jawaban</b> dan tulis penjelasan singkat untuk jawaban benar dan salah.</li>
+              <li>Di tab <b>Jawaban</b>, tautkan ke Google Sheets agar rekap terkumpul otomatis.</li>
+            </ol>
+          </details>
+          <details>
+            <summary>Kalau perangkat atau internet siswa terbatas</summary>
+            <ul class="bullets">
+              <li>Sediakan materi yang bisa diunduh atau dicetak.</li>
+              <li>Jangan jadikan semua tugas bergantung pada internet.</li>
+              <li>Beri waktu mengerjakan kuis di sekolah bagi yang tidak bisa dari rumah.</li>
+            </ul>
+          </details>
+          <details>
+            <summary>Menyesuaikan dengan jenjang SD, SMP, SMA</summary>
+            <ul class="bullets">
+              <li><b>SD:</b> teks pendek, gambar besar, video maksimal 5 menit, perlu didampingi.</li>
+              <li><b>SMP:</b> materi bertahap, latihan bertingkat, mulai belajar mandiri dengan batas waktu jelas.</li>
+              <li><b>SMA/SMK:</b> materi lebih padat, studi kasus, tugas proyek, dan latihan langsung.</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <!-- ============ PROFIL ============ -->
+      <section class="page" id="profil" aria-labelledby="h-g-profil">
+        <header class="page-head">
+          <p class="eyebrow">Profil</p>
+          <h1 id="h-g-profil">Profil guru</h1>
+        </header>
+        <div id="profilBox"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="sheet" id="studentDlg" aria-labelledby="dlgTitle">
+    <div class="sheet-inner" id="studentDlgBody"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/guru.js" defer></script>
+</body>
+</html>

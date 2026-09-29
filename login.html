@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Masuk · RUBEL</title>
+  <meta name="description" content="Masuk ke RUBEL (Ruang Belajar) sebagai siswa, guru, atau orang tua.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 6C40 20 50 30 50 41a18 18 0 0 1-36 0C14 30 24 20 32 6z' fill='%234F86A8'/%3E%3C/svg%3E">
+  <script src="js/db.js"></script>
+  <script>(function () { var u = DB.current(); if (u) location.replace(DB.ROLE_PAGE[u.role]); })();</script>
+</head>
+<body class="login-body">
+  <main class="login" id="main">
+    <!-- Sisi kiri: sambutan -->
+    <section class="login-hello" aria-label="Tentang RUBEL">
+      <div class="brand brand-lg">
+        <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M6 22 L24 7 L42 22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 20 V40 Q10 42 12 42 H36 Q38 42 38 40 V20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path d="M17 42 V30 Q24 27 24 31 Q24 27 31 30 V42" fill="#E3B23C" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M24 31 V42" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span class="brand-text"><b>RUBEL</b><small>Ruang Belajar</small></span>
+      </div>
+
+      <h1>Satu rumah untuk belajar, <span class="underline">bersama-sama</span>.</h1>
+      <p class="lead">Siswa belajar dengan tenang, guru tahu siapa yang perlu dibantu, orang tua bisa ikut menemani dari rumah.</p>
+
+      <ul class="who">
+        <li><span class="who-ico role-siswa">🎒</span><div><b>Siswa</b><p>Baca materi, tonton video, kerjakan kuis, dan tulis refleksi.</p></div></li>
+        <li><span class="who-ico role-guru">🍎</span><div><b>Guru</b><p>Pantau kemajuan kelas dan lihat soal yang paling sering keliru.</p></div></li>
+        <li><span class="who-ico role-ortu">🏡</span><div><b>Orang Tua</b><p>Lihat perkembangan anak dan dapatkan tips mendampingi.</p></div></li>
+      </ul>
+
+      <svg class="login-drop" viewBox="0 0 120 130" aria-hidden="true">
+        <g transform="translate(60 72)">
+          <path class="c-drop" d="M0-50C18-24 34-8 34 14a34 34 0 0 1-68 0C-34-8-18-24 0-50z"/>
+          <circle cx="-11" cy="8" r="3.6" class="c-ink"/><circle cx="11" cy="8" r="3.6" class="c-ink"/>
+          <path d="M-10 20q10 9 20 0" class="c-ink-line"/>
+          <circle cx="-19" cy="18" r="4.5" class="c-blush"/><circle cx="19" cy="18" r="4.5" class="c-blush"/>
+          <path d="M-18-8q-5 10 0 18" class="c-shine"/>
+        </g>
+      </svg>
+      <p class="hand login-drop-say">“Halo! Aku Tetes. Yuk, masuk dulu.”</p>
+    </section>
+
+    <!-- Sisi kanan: formulir -->
+    <section class="login-panel" aria-labelledby="formTitle">
+      <div class="card login-card">
+        <div class="tabs auth-tabs" role="tablist" aria-label="Masuk atau daftar">
+          <button role="tab" class="tab" id="tabLogin" aria-selected="true" aria-controls="formLogin">Masuk</button>
+          <button role="tab" class="tab" id="tabRegister" aria-selected="false" aria-controls="formRegister" tabindex="-1">Daftar baru</button>
+        </div>
+
+        <h2 id="formTitle">Kamu masuk sebagai siapa?</h2>
+        <div class="role-pick" role="radiogroup" aria-labelledby="formTitle">
+          <label class="role-opt role-siswa"><input type="radio" name="role" value="siswa" checked><span class="ro-ico" aria-hidden="true">🎒</span><b>Siswa</b></label>
+          <label class="role-opt role-guru"><input type="radio" name="role" value="guru"><span class="ro-ico" aria-hidden="true">🍎</span><b>Guru</b></label>
+          <label class="role-opt role-ortu"><input type="radio" name="role" value="ortu"><span class="ro-ico" aria-hidden="true">🏡</span><b>Orang Tua</b></label>
+        </div>
+
+        <!-- Masuk -->
+        <form id="formLogin" role="tabpanel" aria-labelledby="tabLogin" novalidate>
+          <label class="field-label" for="lgUser">Nama pengguna</label>
+          <input type="text" id="lgUser" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+          <label class="field-label" for="lgPass">Kata sandi</label>
+          <div class="pw-field">
+            <input type="password" id="lgPass" autocomplete="current-password" required>
+            <button type="button" class="pw-toggle" data-toggle="lgPass" aria-label="Tampilkan kata sandi">Lihat</button>
+          </div>
+          <p class="form-error" id="lgErr" role="alert"></p>
+          <button class="btn btn-primary btn-block" type="submit">Masuk</button>
+          <p class="small muted center">Lupa kata sandi? Minta bantuan gurumu.</p>
+        </form>
+
+        <!-- Daftar -->
+        <form id="formRegister" role="tabpanel" aria-labelledby="tabRegister" novalidate hidden>
+          <label class="field-label" for="rgName">Nama lengkap</label>
+          <input type="text" id="rgName" autocomplete="name" maxlength="40" required>
+
+          <div data-for="siswa">
+            <label class="field-label" for="rgClass">Kode kelas <span class="muted small">(minta ke gurumu)</span></label>
+            <input type="text" id="rgClass" class="code-input" maxlength="8" autocapitalize="characters" spellcheck="false" placeholder="contoh: SIKLUS">
+          </div>
+          <div data-for="guru" hidden>
+            <label class="field-label" for="rgClassName">Nama kelas yang Anda ajar</label>
+            <input type="text" id="rgClassName" maxlength="30" placeholder="contoh: Kelas V-A">
+            <label class="field-label" for="rgSubject">Mata pelajaran</label>
+            <input type="text" id="rgSubject" maxlength="30" value="IPAS">
+          </div>
+          <div data-for="ortu" hidden>
+            <label class="field-label" for="rgChild">Kode anak <span class="muted small">(ada di halaman Profil anak)</span></label>
+            <input type="text" id="rgChild" class="code-input" maxlength="14" autocapitalize="characters" spellcheck="false" placeholder="contoh: DITA-2026">
+          </div>
+
+          <label class="field-label" for="rgUser">Buat nama pengguna</label>
+          <input type="text" id="rgUser" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="20" required>
+          <p class="hint-line">Huruf kecil tanpa spasi, misalnya <code>dita.ayu</code></p>
+          <label class="field-label" for="rgPass">Buat kata sandi</label>
+          <div class="pw-field">
+            <input type="password" id="rgPass" autocomplete="new-password" minlength="6" required>
+            <button type="button" class="pw-toggle" data-toggle="rgPass" aria-label="Tampilkan kata sandi">Lihat</button>
+          </div>
+          <p class="hint-line">Minimal 6 karakter. Jangan beri tahu teman, ya.</p>
+          <p class="form-error" id="rgErr" role="alert"></p>
+          <button class="btn btn-primary btn-block" type="submit">Daftar dan masuk</button>
+        </form>
+      </div>
+
+      <details class="card demo-box" id="demoBox">
+        <summary><span class="hand">Mau mencoba dulu?</span> Pakai akun contoh</summary>
+        <p class="small muted">Klik salah satu, lalu tekan <b>Masuk</b>.</p>
+        <div class="demo-list" id="demoList"></div>
+        <button type="button" class="linkish small" id="resetDemo">Kembalikan semua data contoh ke awal</button>
+      </details>
+
+      <p class="small muted center proto-note">Prototipe: akun dan data disimpan di browser perangkat ini saja.</p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/seed.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

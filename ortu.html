@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruang Orang Tua · RUBEL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 6C40 20 50 30 50 41a18 18 0 0 1-36 0C14 30 24 20 32 6z' fill='%234F86A8'/%3E%3C/svg%3E">
+  <script src="js/db.js"></script>
+  <script>DB.requireRole("ortu");</script>
+</head>
+<body class="theme-ortu">
+  <a class="skip" href="#main">Langsung ke isi</a>
+
+  <header class="topbar">
+    <a class="brand" href="#beranda" aria-label="RUBEL, kembali ke beranda orang tua">
+      <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M6 22 L24 7 L42 22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10 20 V40 Q10 42 12 42 H36 Q38 42 38 40 V20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M17 42 V30 Q24 27 24 31 Q24 27 31 30 V42" fill="#E3B23C" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+        <path d="M24 31 V42" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <span class="brand-text"><b>RUBEL</b><small>Ruang Orang Tua</small></span>
+    </a>
+    <p class="subject-chip"><span class="dot"></span> <span id="subjectChip"></span></p>
+    <div class="top-actions">
+      <button class="icon-btn" id="textSize" type="button" aria-pressed="false" title="Perbesar atau perkecil tulisan">
+        <span aria-hidden="true">A<b>A</b></span><span class="sr">Ukuran tulisan</span>
+      </button>
+      <a class="user-chip" id="userChip" href="#profil"></a>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="sidenav">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h11M4 17h16"/></svg>
+        <span>Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidenav" id="sidenav" aria-label="Halaman orang tua">
+      <p class="nav-caption">Ruang orang tua</p>
+      <ol class="nav-list">
+        <li><a href="#beranda" data-nav="beranda"><span class="nav-ico"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10"/></svg></span><span>Perkembangan Anak<small>Sudah sampai mana?</small></span></a></li>
+        <li><a href="#dampingi" data-nav="dampingi"><span class="nav-ico"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></span><span>Cara Mendampingi<small>Tips &amp; bahan obrolan</small></span></a></li>
+        <li class="nav-sep"><a href="#profil" data-nav="profil"><span class="nav-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span><span>Profil<small>Akun Anda</small></span></a></li>
+      </ol>
+      <div class="nav-note"><p>Bapak/Ibu tidak perlu menjadi ahli. Cukup temani dan dengarkan.</p></div>
+      <button class="btn btn-ghost btn-sm nav-logout" type="button" data-logout>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"/></svg> Keluar
+      </button>
+    </nav>
+    <div class="nav-backdrop" id="navBackdrop" hidden></div>
+
+    <main id="main" tabindex="-1">
+
+      <!-- ============ PERKEMBANGAN ============ -->
+      <section class="page" id="beranda" aria-labelledby="h-o-beranda">
+        <header class="page-head">
+          <p class="hand hello" id="greet"></p>
+          <h1 id="h-o-beranda">Perkembangan belajar <span class="underline" id="childFirst"></span></h1>
+          <p class="lead">Topik saat ini: <strong>Siklus Air</strong>. Berikut ringkasan dari RUBEL, diperbarui setiap kali anak belajar.</p>
+        </header>
+
+        <div class="card child-card" id="childCard"></div>
+
+        <div class="card">
+          <div class="journey-head">
+            <div>
+              <h2>Langkah belajar</h2>
+              <p class="muted" id="journeyText"></p>
+            </div>
+            <div class="ring" aria-hidden="true"><svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="17" class="ring-bg"/><circle cx="21" cy="21" r="17" class="ring-fg" id="ringFg"/></svg><span id="ringNum">0/6</span></div>
+          </div>
+          <ol class="journey-path readonly" id="journeyPath"></ol>
+        </div>
+
+        <div class="stats stats-3" id="childStats"></div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h2>Kata <span id="childFirst2"></span> di refleksinya</h2>
+            <div id="lastReflect"></div>
+          </div>
+          <div class="card talk-tonight">
+            <p class="hand">Ide obrolan malam ini</p>
+            <p id="tonightTip"></p>
+          </div>
+        </div>
+
+        <aside class="note-paper" aria-label="Pesan dari guru">
+          <p class="hand note-title">Pesan dari <span id="teacherName"></span></p>
+          <p id="teacherMsg"></p>
+        </aside>
+      </section>
+
+      <!-- ============ CARA MENDAMPINGI ============ -->
+      <section class="page" id="dampingi" aria-labelledby="h-o-dampingi">
+        <header class="page-head">
+          <p class="eyebrow">Cara Mendampingi</p>
+          <h1 id="h-o-dampingi">Bapak/Ibu tidak perlu menjadi ahli IPA</h1>
+          <p class="lead">Yang anak butuhkan adalah <strong>teman yang mau mendengarkan</strong>. Cukup temani 15–20 menit, tanyakan apa yang ia pelajari, dan beri semangat ketika ia kesulitan.</p>
+        </header>
+
+        <div class="grid-2">
+          <div class="card">
+            <h2>Empat cara mendampingi</h2>
+            <ol class="tips">
+              <li><b>Tanya, jangan menguji.</b> “Tadi belajar apa?” lebih enak didengar daripada “Sudah hafal belum?”</li>
+              <li><b>Biarkan anak mencoba dulu.</b> Bantu hanya ketika ia benar-benar buntu.</li>
+              <li><b>Rayakan usaha, bukan hanya nilai.</b> “Kamu tekun sekali tadi” sangat berarti.</li>
+              <li><b>Cari waktu yang sama setiap hari.</b> Belajar sedikit tapi rutin lebih baik daripada lama tapi jarang.</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h2>Obrolan ringan di meja makan</h2>
+            <p class="muted">Pertanyaan ini bisa ditanyakan sambil santai:</p>
+            <ul class="talk">
+              <li>“Kenapa gelas es teh bagian luarnya basah, ya?”</li>
+              <li>“Kalau jemuran kering, airnya pergi ke mana?”</li>
+              <li>“Awan itu sebenarnya terbuat dari apa?”</li>
+              <li>“Bagaimana cara keluarga kita menghemat air?”</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Kegiatan bersama: Hujan di Dalam Gelas</h2>
+          <p>Ada percobaan kecil di lembar kerja anak. Alatnya mudah: gelas bening, air hangat, piring kecil, dan es batu.</p>
+          <p class="safety"><b>Mohon bantu</b> saat anak menuang air hangat. Biarkan anak yang mengamati dan menulis sendiri hasilnya.</p>
+        </div>
+
+        <div class="card">
+          <h2>Kalau anak sedang malas atau sedih</h2>
+          <ul class="bullets">
+            <li>Tanyakan perasaannya dulu, bukan tugasnya.</li>
+            <li>Tawarkan belajar 10 menit saja. Sering kali setelah mulai, anak ingin lanjut.</li>
+            <li>Kalau anak menulis “bingung” di refleksi, itu hal baik: artinya ia jujur. Guru akan membahasnya di kelas.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ PROFIL ============ -->
+      <section class="page" id="profil" aria-labelledby="h-o-profil">
+        <header class="page-head">
+          <p class="eyebrow">Profil</p>
+          <h1 id="h-o-profil">Profil orang tua</h1>
+        </header>
+        <div id="profilBox"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/ortu.js" defer></script>
+</body>
+</html>
